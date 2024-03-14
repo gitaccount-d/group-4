@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Items with Prices</title>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-uA7EsrCz5pEjvBF3uqO5r2Q4viCWjONM2tkYliX4fITGzQvV8gETgwjyxFc5d5hz" crossorigin="anonymous">
+    <style>
+        /* General Styles */
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease;
+}
+h1 {
+    text-align: center;
+    font-size: 56px;
+    width: 50%;
+    margin-bottom: auto;
+    margin-top: 0%;
+}
+
+.sticky-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+#themeToggle {
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.left-items {
+    background-color: #e9f5e8d9; /* Change to your desired color */
+}
+
+.right-items {
+    background-color: #e0e0e0; /* Change to your desired color */
+}
+
+.bottom-items {
+    background-color: #d8d8d8; /* Change to your desired color */
+}
+
+/* Rest of your CSS... */
+
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .items {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .item {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            padding: 15px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .item:hover {
+            background-color: #00b3007f;
+        }
+
+        .choices {
+            display: none;
+            position: absolute;
+            min-width: inherit;
+            z-index: 1;
+        }
+        .item:hover .choices {
+            display: block;
+            background-color: yellowgreen;
+        }
+
+        .choices a {
+            padding: 8px 15px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        .choices a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .choices a::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 10px);
+            transform: translateY(-50%);
+            background-color: #000;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .choices a:hover::after {
+            opacity: 1;
+        }
+
+        #selectedItems {
+    background-color: #c0c0c0; /* Change to your desired color */
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease;
+}
+
+
+
+        #selectedItems h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #selectedItemList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #selectedItemList li {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #4a42df;
+        }
+
+        #totalPrice {
+            font-weight: bold;
+            color: #333;
+        }
+
+        #billNo {
+            margin-bottom: 10px;
+        }
+
+        #buttonContainer {
+            margin-top: 20px;
+            text-align: center;
+            border: solid darkcyan;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+      
+.greensh-theme #selectedItems {
+    background-color: #0cbf21bc; /* Change to your desired color */
+    color: #ffffff;
+}
+
+        
+        /* Light theme */
+        .light-theme {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Dark theme */
+        .dark-theme {
+            background-color: #222222;
+            color: #ffffff;
+        }
+
+        /* Specific section styles for dark theme */
+        .dark-theme .container {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .dark-theme .items {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #000000;
+        }
+
+        .dark-theme .item {
+            background-color: #b8cdb8da;
+        }
+
+        .dark-theme .choices {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000000;
+        }
+
+        .dark-theme .choices a {
+            color: #000000;
+        }
+
+        .dark-theme #selectedItems {
+            width: 20%;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #000000;
+        }
+       
+
+        .dark-theme button {
+            background-color: #0044cc;
+            color: #ffffff;
+        }
+        .sticky-header h1 {
+            color: rgb(50, 241, 50); /* Light green color for the "professor cafe" text */
+        }
+       /* Third theme */
+
+
+    </style>
+</head>
+<body style="background-image: url(b.jpg);">
+    <header class="sticky-header">
+        <h1>professor cafe</h1>
+        <button id="themeToggle">light and dark</button>
+    </header>
+    
+   
+<div class="all">
+    <div class="container">
+<!-- Left items -->
+<div class="items left-items">
+    <h1 >food   </h1>
+    
+    <!-- First food item: 1, ዳቦ (dabo) -->
+    <!-- First food item: 1, ዳቦ (dabo) -->
+<div class="item" data-price="10.00" >ዳቦ frfr
+    <div class="choices">
+        <a href="#" data-price="5.00" data-tooltip="Option 1 description">ye bi dabo</a>
+        <a href="#" data-price="6.00" data-tooltip="Option 2 description">yebetu dabo</a>
+        
+    </div>
+</div>
+
+  <!-- Third food item: 3, agelgle -->
+<div class="item" data-price="12.00">ኣገልግል
+    <div class="choices">
+        <a href="#" data-price="7.00" data-tooltip="ሙሉ አማርኛ ሰርተፍ መጠን">ኣገልግል ሙሉ</a>
+        <a href="#" data-price="9.00" data-tooltip="ግማሽ አማርኛ ሰርተፍ መጠን">ኣገልግል ግማሽ</a>
+    </div>
+</div>
+
+
+
+   <!-- Third food item: 3, እንቁላል (እንቁላል) -->
+<div class="item" data-price="12.00"> እንቁላል
+    <div class="choices">
+        <a href="#" data-price="7.00" data-tooltip="ፍርፍር">ፍርፍር</a>
+        <a href="#" data-price="8.00" data-tooltip="ስልስኢ">ስልስኢ</a>
+    </div>
+</div>
+
+    <!-- Fourth food item: 4, ፓስታ (pasta) -->
+    <div class="item" data-price="15.00"> ፓስታ
+        <div class="choices">
+            <a href="#" data-price="10.00" data-tooltip="Option 1 description">  ፓስታዳቦ</a>
+            <a href="#" data-price="12.00" data-tooltip="Option 2 description">ፓስታ በንጀራ</a>
+        </div>
+    </div>
+    <div class="item" data-price="10.00" >ተጋሚኖ
+        <div class="choices">
+            <a href="#" data-price="5.00" data-tooltip="Option 1 description">ተጋሚኖ በዳቦ</a>
+            <a href="#" data-price="6.00" data-tooltip="Option 2 description">ተጋሚኖ በንጀራ</a>
+           
+        </div>
+    </div>
+    
+      <!-- Third food item: 3, agelgle -->
+    <div class="item" data-price="12.00">ሳንድች
+        <div class="choices">
+            <a href="#" data-price="7.00" data-tooltip="ሙሉ አማርኛ ሰርተፍ መጠን">Single </a>
+            
+            <a href="#" data-price="9.00" data-tooltip="ግማሽ አማርኛ ሰርተፍ መጠን">Double </a>
+        </div>
+    </div>
+    
+    
+    
+       <!-- Third food item: 3, እንቁላል (እንቁላል) -->
+    <div class="item" data-price="12.00">3, እንቁላል
+        <div class="choices">
+            <a href="#" data-price="7.00" data-tooltip="ፍርፍር">ፍርፍር</a>
+            <a href="#" data-price="8.00" data-tooltip="ስልስኢ">ስልስኢ</a>
+        </div>
+    </div>
+    
+        <!-- Fourth food item: 4, ፓስታ (pasta) -->
+        <div class="item" data-price="15.00">4, ፓስታ
+            <div class="choices">
+                <a href="#" data-price="10.00" data-tooltip="Option 1 description">Option 1</a>
+                <a href="#" data-price="12.00" data-tooltip="Option 2 description">Option 2</a>
+            </div>
+        </div>
+        <div class="item" data-price="10.00" >1, ዳቦ
+            <div class="choices">
+                <a href="#" data-price="5.00" data-tooltip="Option 1 description">Option 1</a>
+                <a href="#" data-price="6.00" data-tooltip="Option 2 description">Option 2</a>
+                <a href="#" data-price="6.00" data-tooltip="Option 3 description">Option 3</a>
+            </div>
+        </div>
+        
+          <!-- Third food item: 3, agelgle -->
+        <div class="item" data-price="12.00">2, አገልግሌ
+            <div class="choices">
+                <a href="#" data-price="7.00" data-tooltip="ሙሉ አማርኛ ሰርተፍ መጠን">ሙሉ</a>
+                
+                <a href="#" data-price="9.00" data-tooltip="ግማሽ አማርኛ ሰርተፍ መጠን">ግማሽ</a>
+            </div>
+        </div>
+        
+        
+        
+           <!-- Third food item: 3, እንቁላል (እንቁላል) -->
+        <div class="item" data-price="12.00">3, እንቁላል
+            <div class="choices">
+                <a href="#" data-price="7.00" data-tooltip="ፍርፍር">ፍርፍር</a>
+                <a href="#" data-price="8.00" data-tooltip="ስልስኢ">ስልስኢ</a>
+            </div>
+        </div>
+        
+            <!-- Fourth food item: 4, ፓስታ (pasta) -->
+            <div class="item" data-price="15.00">4, ፓስታ
+                <div class="choices">
+                    <a href="#" data-price="10.00" data-tooltip="Option 1 description">Option 1</a>
+                    <a href="#" data-price="12.00" data-tooltip="Option 2 description">Option 2</a>
+                </div>
+            </div>
+            <div class="item" data-price="10.00" >1, ዳቦ
+                <div class="choices">
+                    <a href="#" data-price="5.00" data-tooltip="Option 1 description">Option 1</a>
+                    <a href="#" data-price="6.00" data-tooltip="Option 2 description">Option 2</a>
+                    <a href="#" data-price="6.00" data-tooltip="Option 3 description">Option 3</a>
+                </div>
+            </div>
+            
+              <!-- Third food item: 3, agelgle -->
+            <div class="item" data-price="12.00">2, አገልግሌ
+                <div class="choices">
+                    <a href="#" data-price="7.00" data-tooltip="ሙሉ አማርኛ ሰርተፍ መጠን">ሙሉ</a>
+                    
+                    <a href="#" data-price="9.00" data-tooltip="ግማሽ አማርኛ ሰርተፍ መጠን">ግማሽ</a>
+                </div>
+            </div>
+            
+            
+            
+               <!-- Third food item: 3, እንቁላል (እንቁላል) -->
+            <div class="item" data-price="12.00">3, እንቁላል
+                <div class="choices">
+                    <a href="#" data-price="7.00" data-tooltip="ፍርፍር">ፍርፍር</a>
+                    <a href="#" data-price="8.00" data-tooltip="ስልስኢ">ስልስኢ</a>
+                </div>
+            </div>
+            
+                <!-- Fourth food item: 4, ፓስታ (pasta) -->
+                <div class="item" data-price="15.00">4, ፓስታ
+                    <div class="choices">
+                        <a href="#" data-price="10.00" data-tooltip="Option 1 description">Option 1</a>
+                        <a href="#" data-price="12.00" data-tooltip="Option 2 description">Option 2</a>
+                    </div>
+                </div>
+</div>
+
+
+       <!-- Right items -->
+<div  class="items right-items">
+    <h1>መጠጥ</h1>
+    <!-- First drink item: 1, ኮካ (coka) -->
+    <div class="item" data-price="10.00">1, ኮካ</div>
+    <!-- Second drink item: 2, ምርንዳ (mrinda) -->
+    <div class="item" data-price="10.00">2, ምርንዳ</div>
+    <!-- Third drink item: 3, ስፕሬት (sprite) -->
+    <div class="item" data-price="10.00">3, ስፕሬት</div>
+    <!-- Fourth drink item: 4, ሻይ (shay) -->
+    <div class="item" data-price="10.00">4, ሻይ</div>
+    <!-- Fifth drink item: 5, ቡና (buna) -->
+    <div class="item" data-price="10.00">5, ቡና</div>
+</div>
+
+
+   <!-- Bottom items -->
+<div class="items bottom-items">
+    <h1>(juice)</h1>
+    <!-- First juice item: 1, avocado -->
+    <div class="item" data-price="20.00">1, አቮካዶ </div>
+    <!-- Second juice item: 2, papaya -->
+    <div class="item" data-price="20.00">2, ፓፓያ </div>
+    <!-- Third juice item: 3, spris -->
+    <div class="item" data-price="20.00">3, ስፕሪስ </div>
+</div>
+
+
+<div id="selectedItems">
+    <h2>Selected Items</h2>
+    <button id="addItemButton">dabo</button>
+    <label for="billNo">Bill Number:</label>
+    <span id="billNo">1</span>
+    <ul id="selectedItemList"></ul>
+    <p>Total Price: $<span id="totalPrice">0.00</span></p>
+    <!-- Add the button for quantity input -->
+    <div id="buttonContainer">
+        
+
+        <button id="printButton">Print</button>
+        <button id="resetButton">Reset</button>
+    </div>
+</div>
+
+
+    </div>
+</div>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const selectedItemsList = document.getElementById('selectedItemList');
+    const totalPriceDisplay = document.getElementById('totalPrice');
+    const resetButton = document.getElementById('resetButton');
+    const printButton = document.getElementById('printButton');
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    let totalPrice = 0.00;
+    let billNumber = 1; // Initialize bill number to 1
+
+    function addSelectedItem(itemName, price) {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${itemName} - $${price.toFixed(2)}`;
+        selectedItemsList.appendChild(listItem);
+    }
+
+    function updateTotalPrice(price) {
+        totalPrice += price;
+        totalPriceDisplay.textContent = totalPrice.toFixed(2);
+    }
+
+    function clearSelectedItems() {
+        selectedItemsList.innerHTML = '';
+        totalPrice = 0.00;
+        totalPriceDisplay.textContent = totalPrice.toFixed(2);
+        billNumber += 1;
+        document.getElementById('billNo').textContent = billNumber;
+    }
+
+    const items = document.querySelectorAll('.item');
+    items.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const section = item.closest('.items');
+            if (section.classList.contains('bottom-items')) {
+                const itemName = item.textContent.trim().split(',')[1].trim(); // Extract item name
+                const itemPrice = parseFloat(item.getAttribute('data-price')); // Extract item price
+                addSelectedItem(itemName, itemPrice); // Add selected item
+                updateTotalPrice(itemPrice);
+            } else {
+                // Handling options in the first section
+                const itemName = item.textContent.trim().split(',')[1].trim(); // Extract item name
+                const optionName = event.target.textContent.trim(); // Extract selected option name
+                const optionPrice = parseFloat(event.target.getAttribute('data-price')); // Extract selected option price
+                addSelectedItem(optionName, optionPrice); // Add selected option
+                updateTotalPrice(optionPrice);
+            }
+        });
+    });
+
+    function printInfo() {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write('<h2>Bill Number: ' + billNumber + '</h2>'); // Print bill number
+        printWindow.document.write('<h2>Selected Items</h2>');
+        printWindow.document.write(selectedItemsList.innerHTML);
+        printWindow.document.write('<p>Total Price: $' + totalPrice.toFixed(2) + '</p>');
+        printWindow.print();
+    }
+
+    printButton.addEventListener('click', printInfo);
+
+    resetButton.addEventListener('click', clearSelectedItems);
+
+    // Theme toggle logic
+    themeToggle.addEventListener('click', function () {
+        body.classList.toggle('dark-theme');
+        body.classList.toggle('light-theme');
+        body.classList.toggle('greenish-theme');
+    });
+});
+
+
+
+</script>
+</body>
+</html>

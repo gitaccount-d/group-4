@@ -1,0 +1,403 @@
+                               package project1Assignment;
+import java.util.InputMismatchException;  
+import java.util.Scanner;
+public class Bus {
+	int temp = 0;
+	private static boolean wow =true;
+	int count = 0;
+	static Scanner s = new Scanner(System.in);
+public static void main(String[] args) {
+		int x;
+    Fun f = new Fun();
+		do {
+			try {
+			
+		do {
+			System.out.println("==========================================");
+			System.out.println("well come to bus ticket booking software");
+			System.out.println("#########################################");
+			System.out.println("#########################################");
+			System.out.println("######## 1 for admin           ###########");
+			System.out.println("######## 2  for user           ###########");
+			System.out.println("######## 3 to Exit             ###########");
+			System.out.println("#########################################");
+			System.out.println("#########################################");
+			System.out.println("please  enter your choice");
+			String b2 = s.nextLine();
+			x = Integer.parseInt(b2);
+			// x=s.nextInt();converting data type
+			switch (x) {
+			case 1:
+				f.admin();
+				break;
+			case 2:
+				f.user();
+				break;
+			case 3:
+				break;
+			default:
+				System.out.println("incorect choice try again");
+			}
+			wow=false;
+		} while (x != 3);
+			
+			}
+		catch(NumberFormatException e) {	
+
+           System.out.println("the input u entered dismatch with softwrare needs");
+           }
+         }while(wow!=false);
+         }
+       }
+
+
+class Fun {
+	Scanner sca = new Scanner(System.in);
+	private int temp2=0;
+	private int temp = 0;
+	private int count = 0;
+	private int[] chair = new int[10];
+	private int j = 0;
+	private String km;
+	private int km1=0;
+	private int[] booked_chair=new int[10];
+	private String[] car_name1=new String[15];
+	private String[] to=new String[15];
+	private int[] chair_car=new int[10];
+	private String[] car=new String[12];
+	boolean sure=false;
+	
+	boolean who=false;
+	private String[] name_cust=new String[10];
+	private int[] id_cust=new int[10];
+	private String[] address1=new String[10];
+	private int[] phone_no1=new int[16];
+	
+	private int key;
+	
+	private int[] Distance=new int[10];
+	
+	
+public void admin() 
+{
+	boolean  yes=false;
+	do {
+		try
+		{
+	 int adu=1010;
+	
+	System.out.println("enter your password please");	 
+	System.out.println("Hint use password 1010");
+	for(int j=3;j>0;j--) 
+	{
+	String key1=sca.nextLine();  
+		    	key= Integer.parseInt(key1);
+		    	if(key==adu) 
+		    	{ 
+		    	   who=true;
+		    	   break;
+		    	   }
+		    	   else if(key!=adu) 
+		    	   {
+		    		System.out.println("incorect password try again!!!");
+		    	   System.out.print(j-1);
+		    	   System.out.println("\tchance left");
+		    	   
+		    	   }
+		    	  }	       
+	         yes=true;  
+		      }
+		
+	catch(InputMismatchException in) {
+		System.out.println("try using intger");
+		}
+	catch(NumberFormatException f) {
+		System.out.println("try by entering integer");
+	}
+		
+	}while(yes!=true);  
+	
+	
+	
+		if(who==true) {
+		
+	
+		 int y;
+		do {
+			 System.out.println(" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			 System.out.println(" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			 System.out.println(" @@@@@@@ click 1 to add bus !!           @@@@@@");
+			 System.out.println(" @@@@@@@ click 2 to show passanger info!!@@@@@@@");
+			 System.out.println(" @@@@@@@ click  3 to to search_customer  @@@@@@@!");
+			 System.out.println(" @@@@@@@ click  4 to Exit                @@@@@@@!");
+			 System.out.println(" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");System.out.println(" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			 System.out.println(" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			 System.out.println("please enter your choice");
+			String y1;
+		y1= sca.nextLine();
+		y=Integer.parseInt(y1); 
+	//y=sca.nextInt();for the seck of converting data type
+		switch(y) 
+	{
+	case 1:
+		addbus();
+	break;
+	case 2:
+		passanger_info();
+		break;
+	case 3:
+		search_customer();
+		break;
+	case 4:
+	break;
+	default:
+		System.out.println("incorect choice try again");
+	}
+	
+	}while(y!=4);
+}
+	
+}
+public void user() 
+{
+	boolean boo=true;
+	do 
+	{
+	try 
+	{
+		int u1;String u;
+	do {
+		System.out.println(" ***************************************");
+		System.out.println(" ***************************************");
+		System.out.println(" ******press 1 to registered       *****");
+		System.out.println(" ******press 2 to see available bus******");
+		System.out.println(" ******press 3 to exit             ******");
+		System.out.println(" ***************************************");
+		System.out.println(" ***************************************");
+		System.out.println();
+		System.out.println("enter your choice please");
+		u=sca.nextLine();
+		u1=Integer.parseInt(u);
+		switch(u1) {
+		case 1:
+			register();
+			break;
+		case 2:
+			available_bus();
+			break;
+		
+		default:
+		System.out.println("enter corect choice try again");
+		}
+		}while(u1!=3);
+	boo=false;
+	}
+	catch(InputMismatchException mis) {
+		System.out.println("enter correct choice");
+	}
+	}while(boo!=false);
+   }
+public void addbus() 
+{
+int k,distance1;
+		int chai;
+		String d, k1,distance;
+		String v, c;
+		
+       String car_name;
+     
+       System.out.println("enter car name");
+		car_name=sca.nextLine();
+		car_name1[temp] = car_name;
+       System.out.println("enter free chair please");
+		d = sca.nextLine();
+		chai = Integer.parseInt(d);
+
+		chair[temp] = chai;
+		System.out.println("eneter car licence number");
+		k1 = sca.nextLine();
+		k = Integer.parseInt(k1);
+		chair_car[temp] = k;
+		
+		System.out.println("from ");
+		v = sca.nextLine();
+		car[temp] = v;
+		System.out.println("To ");
+		c = sca.nextLine();
+		to[temp] = c;
+		System.out.println("enter the total distance from start to destination");
+		distance=sca.nextLine();
+		distance1=Integer.parseInt(distance);
+		Distance[temp]=distance1;
+		System.out.println("free chair added succesfuly");
+		System.out.println("if you have another free chair click 1 please!!!!");
+		sure=true;
+		temp++;
+	
+	}
+	
+	public void register() 
+	{
+        int flag = 0;
+		
+		int chair_no, id_card;
+		String chair_no1, name, id_card1;
+		
+		String address;
+		int phone_no;String phone_no3;
+		
+		if(sure==false) 
+		{
+			System.out.println("no chair is added ask for the addmin please");
+		}
+		else {
+		System.out.println("choose chair please");
+		chair_no1 = sca.nextLine();
+
+		chair_no = Integer.parseInt(chair_no1);
+		
+
+		for (int i = 0; i < temp; i++) {
+			if (chair[i] == chair_no && booked_chair[i] == chair_no) {
+				flag = 1;
+				break;
+			} else if (chair[i] == chair_no) {
+				j = count;
+				count++;
+			}
+		}
+		if (flag == 1)
+			System.out.println("the chair is booked before u please chose another");
+		else if (count > j) {
+			System.out.println("enter the distance u want travel");
+			 km=sca.nextLine();
+			 km1=Integer.parseInt(km);
+
+				System.out.println("enter advance payment atleast 50% of total please");
+			int total=km1*2;
+			System.out.println("total is\t" +total);
+			String advance=sca.nextLine();
+			int advance1=Integer.parseInt(advance);
+			if(advance1<0.5*total) {
+				System.out.println("pay atleast half of total to register");
+			}
+			else {
+			System.out.println("enter ur name");
+			name = sca.nextLine();
+			name_cust[temp2] = name;
+			System.out.println("enter ur idetification card");
+			id_card1 = sca.nextLine();
+			id_card = Integer.parseInt(id_card1);
+			id_cust[temp2] = id_card;
+			System.out.println("enter ur address");
+			 address=sca.nextLine();
+			address1[temp2] = address;  
+			System.out.println("enter ur phone number");
+			phone_no3=sca.nextLine();
+			phone_no=Integer.parseInt(phone_no3);
+			phone_no1[temp2]=phone_no;
+			booked_chair[temp2] = chair_no;
+	System.out.println("you registered succesfuly");
+			temp2++;
+			j++;
+sure=true;
+		} 
+		}
+		
+		
+		else {
+			System.out.println("this chair is no is available chose another");
+		}
+
+	}
+	}
+	
+	public void available_bus() 
+	{
+		if(sure==false) 
+		{
+			System.out.println(" the is no added free chair pleas add first");
+		}
+		else 
+		{
+		
+		
+		System.out.println("the avalable chair are here");
+		System.out.printf("%s%10s%10s%7s%51"
+				+ "s%12s%n","car name","chair -no","licenceNo","from","to","distance");
+		for (int i = 0; i < temp; i++) {
+
+			if ( booked_chair[i]!=chair[i]) {
+
+	System.out.printf("%s",car_name1[i]);
+	System.out.printf("%10d",chair[i]);
+	System.out.printf("%10d",chair_car[i]);
+	System.out.printf("%10s",car[i]);
+	System.out.printf("%10s",to[i]);
+		System.out.printf("%10d%n",Distance[i]);		
+			} 
+			else
+				
+				System.out.println("no free chair is available");
+		}
+
+	}
+	}
+public void passanger_info() 
+{
+
+	if(sure==true)
+{
+System.out.println("passanger information are here");
+
+System.out.printf("%10s%10s%10s%10s%n","NAME","ADDRESS","PHONENO","ID_CARD");
+for(int i=0;i<temp2;i++) 
+{
+ System.out.printf("%10s",name_cust[i]);
+System.out.printf("%10s",address1[i] );
+System.out.printf("%10d",id_cust[i] );
+System.out.printf("%10d%n",phone_no1[i]);
+//temp2++;1
+}
+}
+
+else {
+	System.out.println("the is no custumor registered"); 
+}
+}
+public void search_customer() 
+{
+int id;String id1;
+	System.out.println("enter the customer id u want search");
+id1=sca.nextLine();
+ id=Integer.parseInt(id1);
+for(int i=0;i<temp2;i++) 
+{	
+if(id==id_cust[i]) 
+{
+	sure=true;
+break;	
+  }
+}
+ if(sure!=true)
+	System.out.println("no customer found with this id");
+
+if(sure==true) 
+{
+	System.out.println("the customer u search is:");
+	for(int i=0;i<temp2;i++) 
+	{
+		 System.out.printf("%10s",name_cust[i]);
+		 System.out.printf("%10s",address1[i]);
+		 System.out.printf("%10d",phone_no1[i]);
+		 System.out.printf("%10d",id_cust[i]);
+	}
+}
+
+}
+
+}
+
+
+
+                    
